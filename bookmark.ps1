@@ -1,4 +1,4 @@
-$marks = @{};
+$marks = [Ordered]@{};
 
 $marksPath = Join-Path (split-path -parent $profile) .bookmarks
 
@@ -21,11 +21,11 @@ cd $marks["$number"]
 }
 
 function mdump{
-$marks.getenumerator() | export-csv $marksPath -notype
+$marks.getenumerator() | Sort -Property Name | export-csv $marksPath -notype
 }
 
 function lm{
-$marks
+$marks.getenumerator() | Sort -Property Name
 }
 
 Register-EngineEvent PowerShell.Exiting -Action { mdump } | out-null
